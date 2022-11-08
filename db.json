@@ -1,0 +1,19 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "producName": "cafe",
+      "price": "50",
+      "urlImg": "http://cualqueircosa.com",
+      "category": "bebida-caliente"
+    },
+    {
+      "id": 1,
+      "producName": "licuado",
+      "price": "40",
+      "urlImg": "http://cualqueircosa.com",
+      "category": "bebida-fria"
+    }
+  ]
+ 
+}
