@@ -8,12 +8,12 @@
       "category": "bebida-caliente"
     },
     {
-      "id": 1,
+      "id": 2,
       "producName": "licuado",
       "price": "40",
       "urlImg": "http://cualqueircosa.com",
       "category": "bebida-fria"
     }
   ]
- 
+
 }
