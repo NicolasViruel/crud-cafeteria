@@ -2,18 +2,24 @@
   "products": [
     {
       "id": 1,
-      "producName": "cafe",
+      "productName": "cafe",
       "price": "50",
       "urlImg": "http://cualqueircosa.com",
       "category": "bebida-caliente"
     },
     {
       "id": 2,
-      "producName": "licuado",
+      "productName": "licuado",
       "price": "40",
       "urlImg": "http://cualqueircosa.com",
       "category": "bebida-fria"
+    },
+    {
+      "productName": "cafeconleche",
+      "price": "25",
+      "urlImg": "https://images.pexels.com/photos/3216564/pexels-photo-3216564.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "category": "bebida-caliente",
+      "id": 3
     }
   ]
-
 }
