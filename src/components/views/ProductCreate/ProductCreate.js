@@ -64,7 +64,7 @@ const ProductCreate = ({ URL, getApi }) => {
           navigate("/product/table");
         }
         //obtengo la res (respuesta) y me muestra el producto cargado con su Body y su Header con su estado 201
-        console.log(res);
+        // console.log(res);
       } catch (error) {
         console.log(error);
       }

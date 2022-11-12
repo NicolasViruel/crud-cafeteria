@@ -1,11 +1,11 @@
 {
   "products": [
     {
-      "id": 1,
-      "productName": "cafe",
-      "price": "50",
+      "productName": "cafecito",
+      "price": "20",
       "urlImg": "http://cualqueircosa.com",
-      "category": "bebida-caliente"
+      "category": "bebida-caliente",
+      "id": 1
     },
     {
       "id": 2,
