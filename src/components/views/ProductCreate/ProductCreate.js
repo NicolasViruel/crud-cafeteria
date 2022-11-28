@@ -10,64 +10,70 @@ import {
 } from "../../helpers/ValidateFields";
 
 const ProductCreate = ({ URL, getApi }) => {
-  //States
   const [productName, setProductName] = useState("");
   const [price, setPrice] = useState(0);
-  const [urlImg, seturlImg] = useState("");
+  const [urlImg, setUrlImg] = useState("");
   const [category, setCategory] = useState("");
-  //useNavigate
+  //useNavigate para que me redirija a la Tabla
   const navigate = useNavigate();
 
-  //Funcion para crear el producto
   const handleSubmit = (e) => {
     e.preventDefault();
+    //Valido los datos con la carpeta "Helpers"
 
-    //Valido los campos
     if (
       !validateProductName(productName) ||
       !validatePrice(price) ||
       !validateUrl(urlImg) ||
       !validateCategory(category)
     ) {
-      Swal.fire("Ops!", "Some data is invalid.", "error");
+      Swal.fire("Ops!", "Some data are Invalid.", "error");
+
       return;
     }
 
-    //Envio los datos para guardarlos
-    const newProduct = {
-      productName,
-      price,
-      urlImg,
-      category,
-    };
-
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Save",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          const res = await fetch(URL, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(newProduct),
-          });
-          if (res.status === 201) {
-            Swal.fire("Created!", "Your file has been created.", "success");
-            getApi();
-            navigate("/product/table");
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    });
+     //envio los datos creando el nuevo producto
+  const NewProduct = {
+    productName,
+    price,
+    urlImg,
+    category
   };
+
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Save",
+    //recordar que el async va en esta pocicion ya que es una funcion Flecha
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        //creamos el Metodo "POST"
+        const res = await fetch(URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(NewProduct),
+        });
+        if (res.status === 201) {
+          Swal.fire("Created!", "Your file has been created.", "success");
+          getApi();
+          navigate("/product/table");
+        }
+        //obtengo la res (respuesta) y me muestra el producto cargado con su Body y su Header con su estado 201
+        // console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  });
+
+  };
+
+ 
 
   return (
     <div>
@@ -81,7 +87,7 @@ const ProductCreate = ({ URL, getApi }) => {
             <Form.Control
               type="text"
               placeholder="Ej: Café"
-              onChange={({ target }) => setProductName(target.value)}
+              onChange={(e) => setProductName(e.target.value)}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -89,7 +95,7 @@ const ProductCreate = ({ URL, getApi }) => {
             <Form.Control
               type="number"
               placeholder="Ej: 50"
-              onChange={({ target }) => setPrice(target.value)}
+              onChange={(e) => setPrice(e.target.value)}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -97,12 +103,12 @@ const ProductCreate = ({ URL, getApi }) => {
             <Form.Control
               type="text"
               placeholder="Ej: https://media.istockphoto.com/photos/two-freshly-baked-french-id1277579771?k=20"
-              onChange={({ target }) => seturlImg(target.value)}
+              onChange={(e) => setUrlImg(e.target.value)}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicCheckbox">
             <Form.Label>Category*</Form.Label>
-            <Form.Select onChange={({ target }) => setCategory(target.value)}>
+            <Form.Select onChange={(e) => setCategory(e.target.value)}>
               <option value="">Select an option</option>
               <option value="bebida-caliente">Bebida Caliente</option>
               <option value="bebida-fria">Bebida Fria</option>

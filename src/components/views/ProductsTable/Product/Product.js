@@ -9,7 +9,11 @@ const Product = ({ product, URL, getApi }) => {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
+<<<<<<< HEAD
+      confirmButtonText: "Deleted",
+=======
       confirmButtonText: "Delete",
+>>>>>>> master
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
@@ -33,12 +37,21 @@ const Product = ({ product, URL, getApi }) => {
   return (
     <tr>
       <td>{product.id}</td>
+<<<<<<< HEAD
+      <td>{product.productName} </td>
+      <td>${product.price} </td>
+      <td>
+        <p className="truncate-img-link m-0">{product.urlImg}</p>
+      </td>
+      <td>{product.category} </td>
+=======
       <td>{product.productName}</td>
       <td>${product.price}</td>
       <td>
         <p className="truncate-img-link m-0">{product.urlImg}</p>
       </td>
       <td>{product.category}</td>
+>>>>>>> master
       <td className="w-25">
         <div className="d-flex justify-content-center">
           <Link

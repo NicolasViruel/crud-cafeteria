@@ -1,87 +1,101 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Container, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import {
-  validateCategory,
-  validatePrice,
-  validateProductName,
-  validateUrl,
-} from "../../helpers/ValidateFields";
+import { validateCategory, validatePrice, validateProductName, validateUrl } from "../../helpers/ValidateFields";
 
-const ProductEdit = ({ URL, getApi }) => {
-  //State
-  const [product, setProduct] = useState({});
-  //Parametro
-  const { id } = useParams();
+const ProductEdit = ({URL, getApi}) => {
+
+  //state
+  const [product, setProduct] = useState({})
+
+  //parametro
+  const {id} = useParams()
+  console.log(`${URL}/${id}`) //esto es para juntar los 2 parametros y colocarlos en el fetch para poder hacer la peticion.
+
   //Referencias
-  const productNameRef = useRef("");
-  const priceRef = useRef("");
-  const urlImgRef = useRef("");
+  const productNameRef = useRef("")
+  const priceRef = useRef("")
+  const urlImgRef = useRef("")
+  
   //Navigate
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  //UseEffect
-  useEffect(async () => {
+  
+  
+  //useEffect
+  useEffect(async () =>{
     try {
-      const res = await fetch(`${URL}/${id}`);
-      const productApi = await res.json();
-      setProduct(productApi);
+      const res = await fetch(`${URL}/${id}`)
+      const productApi = await res.json()
+      //seteamos y guardamos el objeto
+      setProduct(productApi)
+      console.log(productApi);
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  }, []);
+  }, [])
 
-  //Funcion para actualizar los datos
-  const handleSubmit = (e) => {
-    e.preventDefault();
 
-    //Valido los campos
-    if (
-      !validateProductName(productNameRef.current.value) ||
-      !validatePrice(priceRef.current.value) ||
-      !validateUrl(urlImgRef.current.value) ||
-      !validateCategory(product.category)
-    ) {
-      Swal.fire("Ops!", "Some data is invalid.", "error");
-      return;
-    }
+  //funcion para actualizar los datos
+ const handleSubmit = (e) =>{
+  e.preventDefault()
 
-    //Guardo el objeto
-    const productUpdated = {
-      productName: productNameRef.current.value,
-      price: priceRef.current.value,
-      urlImg: urlImgRef.current.value,
-      category: product.category,
-    };
+  //Valido los datos con la carpeta "Helpers"
 
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Update",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          const res = await fetch(`${URL}/${id}`, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(productUpdated),
-          });
-          if (res.status === 200) {
-            Swal.fire("Updated!", "Your file has been updated.", "success");
-            getApi();
-            navigate("/product/table");
-          }
-        } catch (error) {
-          console.log(error);
+  if (
+    !validateProductName(productNameRef.current.value) ||
+    !validatePrice(priceRef.current.value) ||
+    !validateUrl(urlImgRef.current.value) ||
+    !validateCategory(product.category)
+  ) {
+    Swal.fire("Ops!", "Some data are Invalid.", "error");
+
+    return;
+  }
+
+  //guardo el Objeto
+  const productUpdated = {
+    productName: productNameRef.current.value,
+    price: priceRef.current.value,
+    urlImg: urlImgRef.current.value,
+    category: product.category
+  }
+
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Update'
+  }).then( async (result) => {
+    if (result.isConfirmed) {
+      try {
+        const res = await fetch (`${URL}/${id}`, {
+          method:"PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(productUpdated),
+        });
+        if (res.status === 200) {
+          Swal.fire(
+            'Updated!',
+            'Your file has been updated.',
+            'success'
+          );
+          getApi();
+          navigate("/product/table");
         }
+        
+      } catch (error) {
+        
       }
-    });
-  };
+      
+    }
+  })
+ }
+
 
   return (
     <div>
@@ -92,38 +106,27 @@ const ProductEdit = ({ URL, getApi }) => {
         <Form className="my-5" onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Product name*</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Ej: Café"
-              defaultValue={product.productName}
-              ref={productNameRef}
-            />
+            <Form.Control type="text" placeholder="Ej: Café" defaultValue={product.productName} ref={productNameRef} />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Price*</Form.Label>
-            <Form.Control
-              type="number"
-              placeholder="Ej: 50"
-              defaultValue={product.price}
-              ref={priceRef}
-            />
+            <Form.Control type="number" placeholder="Ej: 50" defaultValue={product.price} ref={priceRef} />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Image URL*</Form.Label>
             <Form.Control
               type="text"
               placeholder="Ej: https://media.istockphoto.com/photos/two-freshly-baked-french-id1277579771?k=20"
-              defaultValue={product.urlImg}
-              ref={urlImgRef}
+              defaultValue={product.urlImg} ref={urlImgRef}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicCheckbox">
             <Form.Label>Category*</Form.Label>
             <Form.Select
-              value={product.category}
-              onChange={({ target }) =>
-                setProduct({ ...product, category: target.value })
-              }
+             value={product.category}
+             onChange={( {target} ) =>
+              setProduct({...product, category: target.value})
+            } 
             >
               <option value="">Select an option</option>
               <option value="bebida-caliente">Bebida Caliente</option>

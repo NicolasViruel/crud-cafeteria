@@ -8,7 +8,7 @@ const CarouselHome = () => {
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src="https://www.jasonshonbennett.com/wp-content/uploads/2019/05/Untitled-design-2-4.jpg"
+            src="https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             alt="cafe"
           />
           <Carousel.Caption>
