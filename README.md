@@ -19,6 +19,7 @@ json-server --watch db.json --port 4000
 
 ---
 ## Variables de entorno
+
 Esta app utiliza la siguiente variable de entorno:
 
 REACT_APP_API_CAFETERIA
